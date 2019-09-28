@@ -1,0 +1,42 @@
+extends layout
+
+
+
+block content
+
+  h1 jazz-lib
+  h5 A search tool for Discogs' jazz records 
+  hr
+  a(style="color: #3644FF") years
+  a  >
+  a(style="color: #3644FF")  countries
+  a  >
+  a(style="color: #3644FF")  labels
+  a  >
+  a(style="color: #3644FF")  personnel
+  a  > album
+  hr
+  p.lead 
+  .row
+    .col-md-6
+      h5= albumData.title
+      h6= "by "+albumData.artists[0].name
+      p
+      p= "Styles: "+albumData.styles
+      p= "Country: "+albumData.country
+      p= "Release Year: "+albumData.released
+      p= "Label: "+albumData.labels[0].name
+      p= "Rating: "+albumData.community.rating.average
+      p= "Rating Count: "+albumData.community.rating.count
+      p       
+      hr
+      a(href="/years") Redo Search 
+      br
+      a(href=albumData.uri) Discogs URL
+      p Backspace to pick another album
+    .col-md-6
+      each artist in albumData.extraartists
+        p= artist.role + ": " + artist.name
+      p
+
+      

@@ -1,0 +1,32 @@
+extends layout
+
+
+
+block content
+
+  h1 jazz-lib
+  h5 A search tool for Discogs' jazz records 
+  hr
+  a(style="color: #3644FF") years
+  a  >
+  a(style="color: #3644FF")  countries
+  a  >
+  a(style="color: #3644FF")  labels
+  a  >
+  a(style="color: #3644FF")  personnel
+  a  >
+  a(style="color: #3644FF")  album
+  hr
+  p.lead 
+  .row
+    .col-md-12
+      h4 Select one album  
+
+      form(method="POST", action="/info")
+        input(hidden class="input" type="text" name="album" size="120")
+        each index, val in albumsObj
+            p
+            button(class="choosealbum" style="cursor: pointer" )= val
+            a(hidden name="id")= hidden[val]
+            a(style="color: #777777")= " "+index 
+        

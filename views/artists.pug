@@ -1,0 +1,164 @@
+extends layout
+
+
+
+block content
+
+  h1 jazz-lib
+  h5 A search tool for Discogs' jazz records 
+  hr
+  a(style="color: #3644FF") years
+  a  >
+  a(style="color: #3644FF")  countries
+  a  >
+  a(style="color: #3644FF")  labels
+  a  >
+  a(style="color: #3644FF")  personnel
+  a  > album
+  hr
+  p.lead 
+  .row
+    .col-md-12
+      h4 Select personnel:
+      a(href="#keys") piano
+      a , 
+      a(href="#vibes") vibes
+      a , 
+      a(href="#organ") organ
+      a , 
+      a(href="#guitar") guitar
+      a , 
+      a(href="#bass") bass
+      a , 
+      a(href="#drums") drums
+      a , 
+      a(href="#alto-saxophone") alto saxophone
+      a , 
+      a(href="#tenor-saxophone") tenor saxophone
+      a , 
+      a(href="#trumpet") trumpet
+      a , 
+      a(href="#trombone") trombone
+      a , 
+      a(href="#other") other
+
+
+      hr
+    .col-md-6
+      h4 Rhythm
+      p
+      a(style="font-size: 18px" id="keys") Piano:
+      a(class="all-persons" style="cursor: pointer")  select all
+          br
+          each index in personnelObj
+            if (personnelKVObj[index].includes("Piano") || personnelKVObj[index].includes("piano"))
+                a(class="choose tag" style="color: #3644FF; cursor: pointer; font-size: 14px")= index + ": " 
+                a(hidden)= personnelKVObj[index].substring(0,32)+"..."
+                a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
+      p
+      a(style="font-size: 18px" id="vibes") Vibes:
+      a(class="all-persons" style="cursor: pointer")  select all
+          br
+          each index in personnelObj
+            if (personnelKVObj[index].includes("Vibraphone"))
+                a(class="choose tag" style="color: #3644FF; cursor: pointer; font-size: 14px")= index + ": " 
+                a(hidden)= personnelKVObj[index].substring(0,32)+"..."
+                a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
+
+      p
+      a(style="font-size: 18px" id="organ") Organ:
+      a(class="all-persons" style="cursor: pointer")  select all
+          br
+          each index in personnelObj
+            if (personnelKVObj[index].includes("Organ"))
+                a(class="choose tag" style="color: #3644FF; cursor: pointer; font-size: 14px")= index + ": " 
+                a(hidden)= personnelKVObj[index].substring(0,32)+"..."
+                a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
+      
+      p
+      a(style="font-size: 18px" id="") Guitar:
+      a(class="all-persons" style="cursor: pointer")  select all
+          br
+          each index in personnelObj
+            if (personnelKVObj[index].includes("Guitar") || personnelKVObj[index].includes("guitar"))
+                a(class="choose tag" style="color: #3644FF; cursor: pointer; font-size: 14px")= index + ": " 
+                a(hidden)= personnelKVObj[index].substring(0,32)+"..."
+                a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
+      
+      p
+      a(style="font-size: 18px" id="bass") Bass:
+      a(id="all-persons" style="cursor: pointer")  select all
+          br
+          each index in personnelObj
+            if (personnelKVObj[index].includes("Bass") || personnelKVObj[index].includes("bass"))
+                a(class="choose tag" style="color: #3644FF; cursor: pointer; font-size: 14px")= index + ": " 
+                a(hidden)= personnelKVObj[index].substring(0,32)+"..."
+                a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
+      
+      p
+      a(style="font-size: 18px" id="drums") Drums:
+      a(class="all-persons" style="cursor: pointer")  select all
+          br
+          each index in personnelObj
+            if (personnelKVObj[index].includes("Drums") || personnelKVObj[index].includes("drums"))
+                a(class="choose tag" style="color: #3644FF; cursor: pointer; font-size: 14px")= index + ": " 
+                a(hidden)= personnelKVObj[index].substring(0,32)+"..."
+                a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
+
+    .col-md-6
+      h4 Horns  
+      p
+      a(style="font-size: 18px" id="alto-saxophone") Alto Saxophone:
+      a(class="all-persons" style="cursor: pointer")  select all
+          br
+          each index in personnelObj
+            if (personnelKVObj[index].includes("Alto Saxophone"))
+                a(class="choose tag" style="color: #3644FF; cursor: pointer; font-size: 14px")= index + ": " 
+                a(hidden)= personnelKVObj[index].substring(0,32)+"..."
+                a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
+      
+      p
+      a(style="font-size: 18px" id="tenor-saxophone") Tenor Saxophone:
+      a(class="all-persons" style="cursor: pointer")  select all
+          br
+          each index in personnelObj
+            if (personnelKVObj[index].includes("Tenor Saxophone"))
+                a(class="choose tag" style="color: #3644FF; cursor: pointer; font-size: 14px")= index + ": " 
+                a(hidden)= personnelKVObj[index].substring(0,32)+"..."
+                a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
+
+      p
+      a(style="font-size: 18px" id="trumpet") Trumpet:
+      a(class="all-persons" style="cursor: pointer")  select all
+          br
+          each index in personnelObj
+            if (personnelKVObj[index].includes("Trumpet") || personnelKVObj[index].includes("trumpet") || personnelKVObj[index].includes("Cornet") || personnelKVObj[index].includes("cornet"))
+                a(class="choose tag" style="color: #3644FF; cursor: pointer; font-size: 14px")= index + ": " 
+                a(hidden)= personnelKVObj[index].substring(0,32)+"..."
+                a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
+          
+      p
+      a(style="font-size: 18px" id="trombone") Trombone:
+      a(class="all-persons" style="cursor: pointer")  select all
+          br
+          each index in personnelObj
+            if (personnelKVObj[index].includes("Trombone") || personnelKVObj[index].includes("trombone"))
+                a(class="choose tag" style="color: #3644FF; cursor: pointer; font-size: 14px")= index + ": " 
+                a(hidden)= personnelKVObj[index].substring(0,32)+"..."
+                a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
+    .col-md-12
+      p
+      a(style="font-size: 18px" id="other") Other:
+      a(class="all-persons" style="cursor: pointer")  select all
+          br
+          each index in personnelObj
+            if (!(personnelKVObj[index].includes("Drums") || personnelKVObj[index].includes("drums") || personnelKVObj[index].includes("Trombone") || personnelKVObj[index].includes("trombone") || personnelKVObj[index].includes("Trumpet") || personnelKVObj[index].includes("trumpet") || personnelKVObj[index].includes("Cornet") || personnelKVObj[index].includes("cornet") || personnelKVObj[index].includes("Saxophone") || personnelKVObj[index].includes("saxophone") || personnelKVObj[index].includes("Bass") || personnelKVObj[index].includes("bass") || personnelKVObj[index].includes("Guitar") || personnelKVObj[index].includes("guitar") || personnelKVObj[index].includes("Piano") || personnelKVObj[index].includes("piano") || personnelKVObj[index].includes("Vibraphone") || personnelKVObj[index].includes("Organ")))
+                a(class="choose tag" style="color: #3644FF; cursor: pointer; font-size: 14px")= index + ": " 
+                a(hidden)= personnelKVObj[index].substring(0,32)+"..."
+                a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
+    
+      p
+      form(method="POST", action="/albums")
+        input(class="input" type="text" name="artists" size="90")
+        input(class="btn-default" type="submit" value="Next") 
+      button(class="btn-default" id="clear-me" style="cursor: pointer") Clear

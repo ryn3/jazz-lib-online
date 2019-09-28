@@ -1,0 +1,32 @@
+extends layout
+
+
+
+block content
+
+  h1 jazz-lib
+  h5 A search tool for Discogs' jazz records 
+  hr
+  a(style="color: #3644FF") years
+  a  >
+  a(style="color: #3644FF")  countries
+  a  >
+  a(style="color: #3644FF")  labels
+  a  > personnel > album
+  hr
+  p.lead 
+  .row
+    .col-md-12
+      h4 Select label(s)
+   
+      p
+      a(class="all-years" style="cursor: pointer") select all
+      p
+          each index in labelsObj
+            a(class="choose" style="color: #3644FF; cursor: pointer")= index + ": "  
+            a(style="color: #777777")= labelsKVObj[index] + ", "
+    
+      form(method="POST", action="/artists")
+        input(class="input" type="text" name="labels" size="90")
+        input(class="btn-default" type="submit" value="Next") 
+      button(class="btn-default" id="clear-me" style="cursor: pointer") Clear

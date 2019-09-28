@@ -48,15 +48,15 @@ const app = express();
 /**
  * Connect to MongoDB.
  */
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('useNewUrlParser', true);
+//mongoose.set('useFindAndModify', false);
+//mongoose.set('useCreateIndex', true);
+//mongoose.set('useNewUrlParser', true);
 mongoose.connect("mongodb://verve3349:Leeryan14*@ds349587.mlab.com:49587/jazzlib")
-mongoose.connection.on('error', (err) => {
-  console.error(err);
-  console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
-  process.exit();
-});
+//mongoose.connection.on('error', (err) => {
+//  console.error(err);
+//  console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
+//  process.exit();
+//});
 
 /**
  * Express configuration.

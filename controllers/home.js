@@ -363,51 +363,8 @@ exports.postYears = (req, res) => {
             newQuery.push(item)
         }
     })
-    if ('all' in newQuery) {
 
-        Album.find{}, 'releases.release.country', function (err, countries) {
-
-            if (err) {
-                console.log(err)
-            } else {
-                //console.log(countries)
-                var countryArray = {}
-                countries.forEach(function (one_country) {
-                    try {
-                        newCountry = one_country._doc.releases.release.country
-                        if (newCountry in countryArray) {
-                            countryArray[newCountry]++
-                        } else {
-                            countryArray[newCountry] = 1
-                        }
-
-                    } catch (e) {
-                    }
-                })
-                var keysSorted = Object.keys(countryArray).sort(function (a, b) { return countryArray[b] - countryArray[a] })
-
-                all = {
-                    'all': 0
-                }
-                Object.keys(countryArray).forEach(function (country) {
-                    all['all'] += countryArray[country]
-                })
-
-                res.render('countries', {
-                    title: 'Countries',
-                    //years: Object.keys(yearArray),
-                    //counts: Object.values(yearArray),
-                    countriesObj: keysSorted,
-                    countriesKVObj: countryArray,
-                    allObj: all,
-                    //yearsSorted: keys,
-                    //countsSorted: values,
-                })
-            }
-        })
-
-    } else {
-            Album.find({
+    Album.find({
                 'releases.release.released': { '$in': newQuery }
             }, 'releases.release.country', function (err, countries) {
 
@@ -450,7 +407,7 @@ exports.postYears = (req, res) => {
                 }
             })
 
-    }
+    
 
     console.log(newQuery)
     yearsArrayFinal = newQuery

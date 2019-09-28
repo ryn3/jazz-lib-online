@@ -18,9 +18,9 @@ const passport = require('passport');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
-const request = require('request');
+//const request = require('request');
 
-const upload = multer({ dest: path.join(__dirname, 'uploads') });
+//const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -31,14 +31,14 @@ dotenv.config({ path: '.env.example' });
  * Controllers (route handlers).
  */
 const homeController = require('./controllers/home');
-const userController = require('./controllers/user');
-const apiController = require('./controllers/api');
-const contactController = require('./controllers/contact');
+//const userController = require('./controllers/user');
+//const apiController = require('./controllers/api');
+//const contactController = require('./controllers/contact');
 
 /**
  * API keys and Passport configuration.
  */
-const passportConfig = require('./config/passport');
+//const passportConfig = require('./config/passport');
 
 /**
  * Create Express server.
@@ -75,16 +75,16 @@ app.use(sass({
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
-  resave: true,
-  saveUninitialized: true,
-  secret: process.env.SESSION_SECRET,
-  cookie: { maxAge: 1209600000 }, // two weeks in milliseconds
-  store: new MongoStore({
-    url: process.env.MONGODB_URI,
-    autoReconnect: true,
-  })
-}));
+//app.use(session({
+//  resave: true,
+//  saveUninitialized: true,
+//  secret: process.env.SESSION_SECRET,
+//  cookie: { maxAge: 1209600000 }, // two weeks in milliseconds
+//  store: new MongoStore({
+//    url: process.env.MONGODB_URI,
+//    autoReconnect: true,
+//  })
+//}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());

@@ -6,10 +6,13 @@
       span.sr-only Toggle navigation
       span.navbar-toggler-icon
     .collapse.navbar-collapse
-      ul.nav.navbar-nav.ml-auto
+      ul.nav.ml-auto
         if !user
+
           li.nav-item(class=(title === 'Login') ? 'active' : undefined)
-            a.nav-link(href='/about') about
+            //a.nav-link(href='/about' style="color:#000000;") About
+          li.nav-item(class=(title === 'Login') ? 'active' : undefined)
+
         else
           li.dropdown(class=(title === 'Account Management') ? 'active' : undefined).nav-item
             a.dropdown-toggle.nav-link(href='#', data-toggle='dropdown')

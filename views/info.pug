@@ -4,8 +4,6 @@ extends layout
 
 block content
 
-  h1 jazz-lib
-  h5 A search tool for Discogs' jazz records 
   hr
   a(style="color: #3644FF") years
   a  >
@@ -17,6 +15,15 @@ block content
   a  > album
   hr
   p.lead 
+    div(id='dialog-message',title='Redo Search')
+      a
+        | If you've found this site useful, 
+      a(style="color:blue", href="https://github.com/savoy1211/jazz-lib-online")  star the repo
+      a  or 
+      a(style="color:blue", href="https://ko-fi.com/N4N614M34")  buy me a coffee :)
+
+
+
   .row
     .col-md-6
       h5= albumData.title
@@ -30,10 +37,10 @@ block content
       p= "Rating Count: "+albumData.community.rating.count
       p       
       hr
-      a(href="/years") Redo Search 
+      a(style="cursor:pointer; color:blue;" class="redo") Redo Search 
       br
-      a(href=albumData.uri) Discogs URL
-      p Backspace to pick another album
+      a(style="cursor:pointer; color:blue" href=albumData.uri) Discogs URL
+      //p Backspace to pick another album
     .col-md-6
       each artist in albumData.extraartists
         p= artist.role + ": " + artist.name

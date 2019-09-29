@@ -13,3 +13,4 @@ This app was inspired in part by:
 * discogs-cli by Jesse Ward <https://github.com/jesseward/discogs-cli>
 * spotipy by Paul Lamere <https://github.com/plamere/spotipy>
 
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N614M34)

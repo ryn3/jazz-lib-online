@@ -135,6 +135,7 @@ app.post('/labels', homeController.postCountries);
 app.post('/artists', homeController.postLabels);
 app.post('/albums', homeController.postArtists);
 app.post('/info', homeController.postAlbum);
+app.get('/about', homeController.getAbout)
 //app.get('/years', homeController.firstNext);
 //app.get('/login', userController.getLogin);
 //app.post('/login', userController.postLogin);

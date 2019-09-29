@@ -439,9 +439,14 @@ exports.postCountries = (req, res) => {
         } else {
             //console.log(labels)
             var labelArray = {}
+
             labels.forEach(function (one_label) {
                 try {
                     newLabel = one_label._doc.releases.release.labels.label['@name']
+                    if (newLabel == undefined) {
+                        //console.log("undefined label")
+                        newLabel = one_label._doc.releases.release.labels.label[0]['@name']
+                    }
                     if (newLabel in labelArray) {
                         labelArray[newLabel]++
                     } else {
@@ -569,12 +574,23 @@ exports.postArtists = (req, res) => {
                     //console.log('this is one_person: ' + one_title)
                     year = one_title._doc.releases.release.released.substring(0, 4)
                     label = one_title._doc.releases.release.labels.label['@name']
+                    if (label == undefined) {
+                        //console.log("undefined label")
+                        label = one_title._doc.releases.release.labels.label[0]['@name']
+                    }
                     country = one_title._doc.releases.release.country
                     title = one_title._doc.releases.release.title
+                    artist = one_title._doc.releases.release.artists.artist.name
+                    
+                    if (artist == undefined) {
+                        console.log("undefined artist")
+                        artist = one_title._doc.releases.release.artists.artist[0].name
+                    }
+                    console.log(artist)
                     id = one_title._doc.releases.release['@id']
                     //console.log('this is title: '+title)
                     hidden[title] = id
-                    titlesArray[title] = label+", "+country+ " " + year
+                    titlesArray[title] = artist+":  "+label+", "+country+ " " + year
                     
                 } catch (e) {
                 }
@@ -622,4 +638,6 @@ exports.postAlbum = (req, res) => {
 
 }
 
-
+exports.getAbout = (req, res) => {
+    res.render('/about')
+}

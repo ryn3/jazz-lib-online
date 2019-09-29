@@ -3,14 +3,24 @@ extends layout
 
 
 block content
-
-  h1 jazz-lib
-  h5 A search tool for Discogs' jazz records 
   hr
   p.lead 
   .row
     .col-md-12
-      a(href="/years" style="font-size:22px") Begin Search
+        p
+        h5 Usage
+        p
+          | This app acts as a library search tool for Discogs' jazz records. Search by decade(s)/year(s), country(s), label(s), and then artist(s). Then select an album to see its Discogs meta data.
+          | Select blue parameters for your search. Gray numbers represent number of jazz records within that parameter.
+          
+        h5 About
+        a Here is the website's 
+        a(href="https://github.com/savoy1211/jazz-lib-online") GitHub repository
+        a . If you've found this site useful, please star the repo or 
+        a(href="https://ko-fi.com/N4N614M34") buy me a coffee 
+        a :)
+        p
+        a(href="/years" style="font-size:20px") Begin Search
          
 
     

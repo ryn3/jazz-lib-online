@@ -78,7 +78,7 @@ block content
       
       p
       a(style="font-size: 18px" id="guitar") Guitar:
-      a(class="all-persons" style="cursor: pointer") select all
+      a(class="all-persons" style="cursor: pointer")  select all
           br
           each index in personnelObj
             if (personnelKVObj[index].includes("Guitar") || personnelKVObj[index].includes("guitar"))
@@ -88,7 +88,7 @@ block content
       
       p
       a(style="font-size: 18px" id="bass") Bass:
-      a(id="all-persons" style="cursor: pointer")  select all
+      a(class="all-persons" style="cursor: pointer")  select all
           br
           each index in personnelObj
             if (personnelKVObj[index].includes("Bass") || personnelKVObj[index].includes("bass"))

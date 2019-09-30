@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\controllers",
+    "\\public",
+    "\\public\\css",
+    "\\public\\css\\themes",
+    "\\public\\css\\themes\\default",
+    "\\public\\css\\themes\\flatly",
+    "\\public\\css\\themes\\modern",
+    "\\views",
+    "\\views\\partials"
+  ],
+  "SelectedNode": "\\controllers\\home.js",
+  "PreviewInSolutionExplorer": false
+}

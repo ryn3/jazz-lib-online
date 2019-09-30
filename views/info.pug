@@ -5,14 +5,19 @@ extends layout
 block content
 
   hr
-  a(style="color: #3644FF") years
+  a(style="color: #3644FF" class="years-input") years
+  a(hidden)= yearsQuery
   a  >
-  a(style="color: #3644FF")  countries
+  a(style="color: #3644FF" class="years-input")  countries
+  a(hidden)= countriesQuery
   a  >
-  a(style="color: #3644FF")  labels
+  a(style="color: #3644FF" class="years-input")  labels
+  a(hidden)= labelsQuery
   a  >
-  a(style="color: #3644FF")  personnel
-  a  > album
+  a(style="color: #3644FF" class="years-input")  personnel
+  a(hidden)= artistsQuery
+  a  >
+  a(style="color: #3644FF")  album
   hr
   p.lead 
     div(id='dialog-message',title='Redo Search')

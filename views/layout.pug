@@ -10,6 +10,7 @@ html
     link(rel='shortcut icon', href='/favicon.png')
     link(rel='stylesheet', href='/css/main.css')
     link(rel='stylesheet', href='/css/qtip.css')
+    link(type="text/css" rel='stylesheet', href='/css/buttons.css')
     link(rel='stylesheet', href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
     link(rel='stylesheet', href='/resources/demos/style.css')
     script(src='https://code.jquery.com/jquery-1.12.4.js')
@@ -46,14 +47,45 @@ html
       ga('send', 'pageview');
       console.log("yeehaw")
 
+
+
+      var yearsInput = '';
+      var countriesInput = '';
+      var labelsInput = '';
+      var artistsInput = '';
+
+
       $(".choose").click(function () {
-          var selection = this.text
-          selection = selection.substring(0, selection.length-2)
-          console.log(selection)
-          $(".input").val($(".input").val() + selection + "; ")
+          if (!$(this).hasClass("selected")){
+              $(this).toggleClass("selected")
+              //$(this.nextElementSibling).toggleClass("selected")
+              var selection = this.textContent
+              selection = selection.substring(0, selection.length-2)
+              console.log(selection)
+              $(".input").val($(".input").val() + selection + "; ")
+
+          }
+
           
-          //alert("Handler for .click() called.");
       });
+
+      $(".save").click(function(){
+         var input = this.previousElementSibling.value
+         if ($(this).is("#year")){
+            yearsInput = input
+         }
+      
+      })
+
+      $(".years-input").each(function(){
+          var text = this.nextElementSibling.text
+          $(this).qtip({  
+              content: text
+          })
+      })
+
+
+
 
       $(".choosealbum").click(function () {
           $(".input").val('')
@@ -61,33 +93,41 @@ html
           selection = selection
           console.log(selection)
           $(".input").val($(".input").val() + selection)
-          //alert("Handler for .click() called.");
       });
 
       $("#clear-me").click(function(){
           $(".input").val("")
+          $(".selected").each(function(){
+             $(this).toggleClass("selected")
+
+          })
 
       })
       $('.tag').each(function(){
+          //console.log(this)
           thisText = this.nextElementSibling.text
+          
+          //console.log(thisText)
           $(this).qtip({  
               content: thisText
           })
       });
 
       $('.all-persons').click(function(){
-          //console.log(this)
+          console.log(this)
           currentNode = this.nextElementSibling
-          //console.log(currentNode)
+          console.log(currentNode)
           var names = []
-          while(currentNode !== null &&currentNode.localName != "p"){
-                //console.log(currentNode)
+          while(currentNode !== null && currentNode.localName != "p"){
+                console.log(currentNode)
                 var name = currentNode.text
-                name = name.substring(0,name.length-2)
-                //console.log(name)
-                names.push(name)
-                currentNode = currentNode.nextElementSibling.nextElementSibling.nextElementSibling
-
+                if (!$(currentNode).hasClass("selected") && $(currentNode).hasClass('tag')){
+                    $(currentNode).toggleClass("selected")
+                    //$(child.nextElementSibling).toggleClass("selected")
+                    name = name.substring(0,name.length-2)
+                    names.push(name)
+                }
+                currentNode = currentNode.nextElementSibling
 
           }
           names.forEach(function(name){
@@ -108,18 +148,20 @@ html
       
        
       $('.all-years').click(function(){
-          //console.log(this)
+          console.log(this)
           currentNode = this.nextElementSibling.childNodes
           var names = []
-          //console.log(currentNode.length)
-          for (var i = 0; i < currentNode.length; i+=2) {
+          console.log(currentNode.length)
+          for (var i = 0; i < currentNode.length; i+=2) {   
             var child = currentNode[i]
-            var name = child.text
-            name = name.substring(0,name.length-2)
-            names.push(name)
+            if (!$(child).hasClass("selected")){
+                var name = child.textContent
+                $(child).toggleClass("selected")
+                //$(child.nextElementSibling).toggleClass("selected")
+                name = name.substring(0,name.length-2)
+                names.push(name)
+            }
           }
-
-
           names.forEach(function(name){
              $(".input").val($(".input").val() + name + "; ")
           })

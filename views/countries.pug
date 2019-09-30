@@ -5,7 +5,8 @@ extends layout
 block content
  
   hr
-  a(style="color: #3644FF") years
+  a(style="color: #3644FF" class="years-input") years
+  a(hidden)= yearQuery
   a  >
   a(style="color: #3644FF")  countries
 
@@ -20,11 +21,12 @@ block content
       a(class="all-years" style="cursor: pointer") select all
       p
           each index in countriesObj
-            a(class="choose" style="color: #3644FF; cursor: pointer")= index + ": "  
-            a(style="color: #777777")= countriesKVObj[index] + ", "
+            text(class="choose" style="color: #3644FF; cursor: pointer")= index + ": "  
+            text(style="color: #777777")= countriesKVObj[index] + ", "
     
       form(method="POST", action="/labels")
         input(class="input" type="text" name="countries" size="90")
+        input(hidden type="text" name="years" value=yearQuery)
         input(class="btn-default" type="submit" value="Next") 
       button(class="btn-default" id="clear-me" style="cursor: pointer") Clear
 

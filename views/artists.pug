@@ -5,11 +5,14 @@ extends layout
 block content
 
   hr
-  a(style="color: #3644FF") years
+  a(style="color: #3644FF" class="years-input") years
+  a(hidden)= yearsQuery
   a  >
-  a(style="color: #3644FF")  countries
+  a(style="color: #3644FF" class="years-input")  countries
+  a(hidden)= countriesQuery
   a  >
-  a(style="color: #3644FF")  labels
+  a(style="color: #3644FF" class="years-input")  labels
+  a(hidden)= labelsQuery
   a  >
   a(style="color: #3644FF")  personnel
   a  > album
@@ -51,7 +54,7 @@ block content
           each index in personnelObj
             if (personnelKVObj[index].includes("Piano") || personnelKVObj[index].includes("piano"))
                 a(class="choose tag" style="color: #3644FF; cursor: pointer; font-size: 14px")= index + ": " 
-                a(hidden)= personnelKVObj[index].substring(0,32)+"..."
+                a(hidden)= personnelKVObj[index].substring(0,45)+"..."
                 a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
       p
       a(style="font-size: 18px" id="vibes") Vibes:
@@ -74,8 +77,8 @@ block content
                 a(style="color: #777777; font-size: 14px")= personnelObj2[index] + ", "
       
       p
-      a(style="font-size: 18px" id="") Guitar:
-      a(class="all-persons" style="cursor: pointer")  select all
+      a(style="font-size: 18px" id="guitar") Guitar:
+      a(class="all-persons" style="cursor: pointer") select all
           br
           each index in personnelObj
             if (personnelKVObj[index].includes("Guitar") || personnelKVObj[index].includes("guitar"))
@@ -158,5 +161,8 @@ block content
       p
       form(method="POST", action="/albums")
         input(class="input" type="text" name="artists" size="90")
+        input(hidden type="text" name="years" value=yearsQuery)
+        input(hidden type="text" name="countries" value=countriesQuery)
+        input(hidden type="text" name="labels" value=labelsQuery)
         input(class="btn-default" type="submit" value="Next") 
       button(class="btn-default" id="clear-me" style="cursor: pointer") Clear

@@ -5,13 +5,17 @@ extends layout
 block content
 
   hr
-  a(style="color: #3644FF") years
+  a(style="color: #3644FF" class="years-input") years
+  a(hidden)= yearsQuery
   a  >
-  a(style="color: #3644FF")  countries
+  a(style="color: #3644FF" class="years-input")  countries
+  a(hidden)= countriesQuery
   a  >
-  a(style="color: #3644FF")  labels
+  a(style="color: #3644FF" class="years-input")  labels
+  a(hidden)= labelsQuery
   a  >
-  a(style="color: #3644FF")  personnel
+  a(style="color: #3644FF" class="years-input")  personnel
+  a(hidden)= artistsQuery
   a  >
   a(style="color: #3644FF")  album
   hr
@@ -22,6 +26,10 @@ block content
 
       form(method="POST", action="/info")
         input(hidden class="input" type="text" name="album" size="120")
+        input(hidden type="text" name="years" value=yearsQuery)
+        input(hidden type="text" name="countries" value=countriesQuery)
+        input(hidden type="text" name="labels" value=labelsQuery)
+        input(hidden type="text" name="artists" value=artistsQuery)
         each index, val in albumsObj
             p
             button(class="choosealbum" style="cursor: pointer" )= val

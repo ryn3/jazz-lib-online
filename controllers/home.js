@@ -11,7 +11,15 @@ var labelsArrayFinal = [];
 var artistsArrayFinal = [];
 
 exports.getHome = (req, res) => {
-    res.render("home")
+    yearArray = {
+        '1957': 1436,
+        '1958': 1469,
+        '1959': 1659,
+    }
+    res.render('home', {
+        title: "home",
+        yearsObj: yearArray
+    })
 }
 
 exports.getYears = (req, res) => {
@@ -352,7 +360,7 @@ exports.postYears = (req, res) => {
     query = req.body.years
     qArray = query.split("; ")
     qArray.pop()
-    newQuery = []
+    var newQuery = []
     qArray.forEach(function (item) {
         if (item.includes('s')) {
             decadeBase = item.substring(0, item.length - 2)
@@ -401,6 +409,7 @@ exports.postYears = (req, res) => {
                         countriesObj: keysSorted,
                         countriesKVObj: countryArray,
                         allObj: all,
+                        yearQuery: newQuery.toString()
                         //yearsSorted: keys,
                         //countsSorted: values,
                     })
@@ -423,11 +432,14 @@ exports.postCountries = (req, res) => {
       normalize country query  
 
     **/
+    console.log(req.body)
+    var yearsQuery = req.body.years
     query = req.body.countries
     qArray = query.split("; ")
     qArray.pop()
     //console.log(qArray)
     countriesArrayFinal = qArray
+    var countriesQuery = qArray
 
     Album.find({
         'releases.release.country': { '$in': countriesArrayFinal },
@@ -470,6 +482,8 @@ exports.postCountries = (req, res) => {
                 labelsObj: keysSorted,
                 labelsKVObj: labelArray,
                 allObj: all,
+                yearsQuery: yearsQuery.toString(),
+                countriesQuery: countriesQuery.toString()
             })
         }
     })
@@ -480,10 +494,14 @@ exports.postLabels = (req, res) => {
       normalize label query  
 
     **/
+    console.log(req.body)
+    var yearsQuery = req.body.years
+    var countriesQuery = req.body.countries
     query = req.body.labels
     qArray = query.split("; ")
     qArray.pop()
     //console.log(qArray)
+    var labelsQuery = qArray
     labelsArrayFinal = qArray
 
     Album.find({
@@ -537,6 +555,9 @@ exports.postLabels = (req, res) => {
                 personnelKVObj: roleArray,
                 personnelObj2: personnelArray,
                 allObj: all,
+                yearsQuery: yearsQuery.toString(),
+                countriesQuery: countriesQuery.toString(),
+                labelsQuery: labelsQuery.toString()
             })
         }
     })
@@ -554,6 +575,10 @@ exports.postArtists = (req, res) => {
     qArray.pop()
     //console.log(qArray)
     artistsArrayFinal = qArray
+    var yearsQuery = req.body.years
+    var countriesQuery = req.body.countries
+    var labelsQuery = req.body.labels
+    var artistsQuery = qArray
 
     Album.find({
         'releases.release.country': { '$in': countriesArrayFinal },
@@ -611,7 +636,12 @@ exports.postArtists = (req, res) => {
             res.render('albums', {
                 title: 'albums',
                 albumsObj: titlesArray,
-                hidden: hidden
+                hidden: hidden,
+                yearsQuery: yearsQuery,
+                countriesQuery: countriesQuery,
+                labelsQuery: labelsQuery,
+                artistsQuery: artistsQuery
+
             })
         }
     })
@@ -625,13 +655,23 @@ exports.postAlbum = (req, res) => {
     **/
 
     query = req.body.album
+
+    var yearsQuery = req.body.years
+    var countriesQuery = req.body.countries
+    var labelsQuery = req.body.labels
+    var artistsQuery = req.body.artists
+
     //console.log(query)
     query = query.substring(0, query.length )
     var db = new Discogs().database();
     db.getRelease(parseInt(query), function (err, data) {
         console.log(data)
         res.render('info', {
-            albumData: data
+            albumData: data,
+            yearsQuery: yearsQuery,
+            countriesQuery: countriesQuery,
+            labelsQuery: labelsQuery,
+            artistsQuery: artistsQuery
         })
 
     });
@@ -639,5 +679,5 @@ exports.postAlbum = (req, res) => {
 }
 
 exports.getAbout = (req, res) => {
-    res.render('/about')
+
 }

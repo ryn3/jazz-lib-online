@@ -13,21 +13,21 @@ block content
   .row
     .col-md-12
       h4 Select decade(s) or year(s)
-      
+
       p 
           each val, index in decadesObj
-            a(class="choose" style="color: #3644FF; cursor: pointer")= index + ": "  
-            a(style="color: #777777")= val + ", "
-      p
+            text(class="choose" style="color: #3644FF; cursor: pointer")= index + ": "  
+            text(style="color: #777777")= val + ", "
+      
       a(class="all-years" style="cursor: pointer") select all
       p
           each val, index in yearsObj
-            a(class="choose" style="color: #3644FF; cursor: pointer")= index + ": "  
-            a(style="color: #777777")= val + ", "
+            text(class="choose" style="color: #3644FF; cursor: pointer")= index + ": "  
+            text(style="color: #777777")= val + ", "
     
       form(method="POST", action="/countries")
         input(class="input" type="text" name="years" size="90")
-        input(class="btn-default" type="submit" value="Next") 
+        input(class="btn-default save" id="years" type="submit" value="Next") 
       button(class="btn-default" id="clear-me" style="cursor: pointer") Clear
 
     

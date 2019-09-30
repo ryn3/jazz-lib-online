@@ -524,7 +524,9 @@ exports.postLabels = (req, res) => {
                         //console.log('this is one_person: '+one_person)
                         if (one_person in personnelArray) {
                             personnelArray[one_person]++
-                            roleArray[one_person] += ", "+person_role
+                            if (roleArray[one_person].length < 5) {
+                                roleArray[one_person] += ", " + person_role
+                            }
                         } else {
                             personnelArray[one_person] = 1
                             roleArray[one_person] = person_role

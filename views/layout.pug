@@ -56,13 +56,39 @@ html
       var artistsInput = '';
 
 
+      $('.all-persons').click(function(){
+          //console.log(this)
+          currentNode = this.nextElementSibling.childNodes
+          //console.log(currentNode.length)
+          var names = []
+          //while(currentNode !== null && currentNode.localName != "p"){
+          for (var i = 0; i < currentNode.length; i+=3){   
+                current = currentNode[i]
+                //console.log(current)
+                var name = current.textContent
+                if (!$(current).hasClass("selected") && $(current).hasClass('tag')){
+                    $(current).toggleClass("selected")
+                    //$(child.nextElementSibling).toggleClass("selected")
+                    name = name.substring(0,name.length-2)
+                    names.push(name)
+                }
+                //currentNode = currentNode.nextElementSibling
+
+          }
+          names.forEach(function(name){
+             $(".input").val($(".input").val() + name + "; ")
+          })
+      })
+
+
       $(".choose").click(function () {
+          //console.log("choose class")
           if (!$(this).hasClass("selected")){
               $(this).toggleClass("selected")
               //$(this.nextElementSibling).toggleClass("selected")
               var selection = this.textContent
               selection = selection.substring(0, selection.length-2)
-              console.log(selection)
+              //console.log(selection)
               $(".input").val($(".input").val() + selection + "; ")
 
           }
@@ -87,7 +113,6 @@ html
 
 
 
-
       $(".choosealbum").click(function () {
           $(".input").val('')
           var selection = this.nextElementSibling.text
@@ -106,7 +131,7 @@ html
       })
       $('.tag').each(function(){
           //console.log(this)
-          thisText = this.nextElementSibling.text
+          thisText = this.nextElementSibling.textContent
           
           //console.log(thisText)
           $(this).qtip({  
@@ -114,27 +139,7 @@ html
           })
       });
 
-      $('.all-persons').click(function(){
-          console.log(this)
-          currentNode = this.nextElementSibling
-          console.log(currentNode)
-          var names = []
-          while(currentNode !== null && currentNode.localName != "p"){
-                console.log(currentNode)
-                var name = currentNode.text
-                if (!$(currentNode).hasClass("selected") && $(currentNode).hasClass('tag')){
-                    $(currentNode).toggleClass("selected")
-                    //$(child.nextElementSibling).toggleClass("selected")
-                    name = name.substring(0,name.length-2)
-                    names.push(name)
-                }
-                currentNode = currentNode.nextElementSibling
 
-          }
-          names.forEach(function(name){
-             $(".input").val($(".input").val() + name + "; ")
-          })
-      })
 
       $( "#dialog-message" ).hide()
       $(".redo").click(function() {

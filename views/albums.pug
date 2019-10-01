@@ -24,7 +24,7 @@ block content
     .col-md-12
       h4 Select one album  
 
-      form(method="POST", action="/info")
+      form( target="_blank" ,method="POST", action="/info")
         input(hidden class="input" type="text" name="album" size="120")
         input(hidden type="text" name="years" value=yearsQuery)
         input(hidden type="text" name="countries" value=countriesQuery)

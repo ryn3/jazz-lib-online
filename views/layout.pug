@@ -83,6 +83,7 @@ html
 
       $(".choose").click(function () {
           //console.log("choose class")
+          console.log(this)
           if (!$(this).hasClass("selected")){
               $(this).toggleClass("selected")
               //$(this.nextElementSibling).toggleClass("selected")
@@ -141,6 +142,36 @@ html
 
       $(".input").click(function(){
          alert("Select by clicking the blue options or 'select all'")
+      })
+
+      $(".alphabetical").click(function(){
+         $(".count").css('color', '#000000')
+         $(".count").css('cursor', 'pointer')
+         $(this).css('color', '#3644FF')
+         $(this).css('cursor', 'pointer')
+         $(".end a").sort(function(c, b){
+            return c.childNodes[1].id > b.childNodes[1].id
+         }).each(function() {
+            $(this).appendTo(".end")
+         })
+      })
+
+
+      $(".count").click(function(){
+         $(".alphabetical").css('color', '#000000')
+         $(".alphabetical").css('cursor', 'pointer')
+         $(this).css('color', '#3644FF')
+         $(this).css('cursor', 'pointer')
+
+         $(".end a").sort(function(c, b){
+            return parseInt(b.childNodes[2].id) > parseInt(c.childNodes[2].id)
+         }).each(function() {
+            $(this).appendTo(".end")
+         })
+      })
+
+      $("#group").click(function(){
+         console.log(this)
       })
 
       $( "#dialog-message" ).hide()

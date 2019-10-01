@@ -23,9 +23,9 @@ block content
     div(id='dialog-message',title='Redo Search')
       a
         | If you've found this site useful, 
-      a(style="color:blue", href="https://github.com/savoy1211/jazz-lib-online")  star the repo
+      a(style="color:blue", href="https://github.com/savoy1211/jazz-lib-online", target="_blank")  star the repo
       a  or 
-      a(style="color:blue", href="https://ko-fi.com/N4N614M34")  buy me a coffee :)
+      a(style="color:blue", href="https://ko-fi.com/N4N614M34", target="_blank")  buy me a coffee :)
 
 
 
@@ -44,7 +44,7 @@ block content
       hr
       a(style="cursor:pointer; color:blue;" class="redo") Redo Search 
       br
-      a(style="cursor:pointer; color:blue" href=albumData.uri) Discogs URL
+      a(style="cursor:pointer; color:blue" href=albumData.uri, target="_blank") Discogs URL
       //p Backspace to pick another album
     .col-md-6
       each artist in albumData.extraartists

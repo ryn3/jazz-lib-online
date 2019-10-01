@@ -46,7 +46,6 @@ html
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-XXXXX-X', 'auto');
       ga('send', 'pageview');
-      console.log("yeehaw")
 
 
 
@@ -59,17 +58,16 @@ html
       $('.all-persons').click(function(){
           //console.log(this)
           currentNode = this.nextElementSibling.childNodes
-          //console.log(currentNode.length)
+          console.log(currentNode)
           var names = []
           //while(currentNode !== null && currentNode.localName != "p"){
-          for (var i = 0; i < currentNode.length; i+=3){   
-                current = currentNode[i]
+          for (var i = 0; i < currentNode.length; i++){   
+                current = currentNode[i].childNodes[1]
                 //console.log(current)
-                var name = current.textContent
+                var name = current.id
                 if (!$(current).hasClass("selected") && $(current).hasClass('tag')){
                     $(current).toggleClass("selected")
                     //$(child.nextElementSibling).toggleClass("selected")
-                    name = name.substring(0,name.length-2)
                     names.push(name)
                 }
                 //currentNode = currentNode.nextElementSibling
@@ -118,7 +116,6 @@ html
           $(".input").val('')
           var selection = this.nextElementSibling.text
           selection = selection
-          console.log(selection)
           $(".input").val($(".input").val() + selection)
       });
 
@@ -131,10 +128,7 @@ html
 
       })
       $('.tag').each(function(){
-          //console.log(this)
           thisText = this.nextElementSibling.textContent
-          
-          //console.log(thisText)
           $(this).qtip({  
               content: thisText
           })
@@ -144,34 +138,97 @@ html
          alert("Select by clicking the blue options or 'select all'")
       })
 
+      $(".title-sort").click(function(){
+         $(".artist-sort").css('color', '#000000','cursor','pointer')
+         $(".label-sort").css('color', '#000000','cursor', 'pointer')
+         $(".year-sort").css('color', '#000000','cursor', 'pointer')
+         $(this).css('color', '#3644FF','cursor', 'pointer')
+         $(".each-album").sort(function(c, b){
+            return c.childNodes[0].id > b.childNodes[0].id
+         }).each(function() {
+            $(this).appendTo($(this).parent())
+         })
+      })
+
+      $(".artist-sort").click(function(){
+         $(".title-sort").css('color', '#000000','cursor','pointer')
+         $(".label-sort").css('color', '#000000','cursor', 'pointer')
+         $(".year-sort").css('color', '#000000','cursor', 'pointer')
+         $(this).css('color', '#3644FF','cursor', 'pointer')
+         $(".each-album").sort(function(c, b){
+            var first = c.childNodes[2].id
+            first = first.substring(0, first.indexOf(":  "))
+            var second = b.childNodes[2].id
+            second = second.substring(0, second.indexOf(":  "))
+            return first > second
+         }).each(function() {
+            $(this).appendTo($(this).parent())
+         })
+      })
+
+      $(".label-sort").click(function(){
+         $(".title-sort").css('color', '#000000','cursor','pointer')
+         $(".artist-sort").css('color', '#000000','cursor', 'pointer')
+         $(".year-sort").css('color', '#000000','cursor', 'pointer')
+         $(this).css('color', '#3644FF','cursor', 'pointer')
+         $(".each-album").sort(function(c, b){
+            var first = c.childNodes[2].id
+            first = first.substring(first.indexOf(":  ")+3,  first.indexOf(",")) + first.substring(first.length-4,first.length)
+            var second = b.childNodes[2].id
+            second = second.substring(second.indexOf(":  ")+3, second.indexOf(",")) +  second.substring(second.length-4,second.length)
+            return first > second
+         }).each(function() {
+            $(this).appendTo($(this).parent())
+         })
+      })
+
+      $(".year-sort").click(function(){
+         $(".title-sort").css('color', '#000000','cursor','pointer')
+         $(".artist-sort").css('color', '#000000','cursor', 'pointer')
+         $(".label-sort").css('color', '#000000','cursor', 'pointer')
+         $(this).css('color', '#3644FF','cursor', 'pointer')
+         $(".each-album").sort(function(c, b){
+            var first = c.childNodes[2].id
+            first = first.substring(first.length-4,first.length) + first.substring(first.indexOf(":  ")+3,  first.indexOf(",")) 
+            var second = b.childNodes[2].id
+            second = second.substring(second.length-4,second.length) + second.substring(second.indexOf(":  ")+3, second.indexOf(",")) 
+            return first > second
+         }).each(function() {
+            $(this).appendTo($(this).parent())
+         })
+      })
+
+
       $(".alphabetical").click(function(){
-         $(".count").css('color', '#000000')
-         $(".count").css('cursor', 'pointer')
-         $(this).css('color', '#3644FF')
-         $(this).css('cursor', 'pointer')
+         $(".count").css('color', '#000000', 'cursor', 'pointer')
+         $(".count-persons").css('color', '#000000', 'cursor', 'pointer')
+         $(this).css('color', '#3644FF', 'cursor', 'pointer')
          $(".end a").sort(function(c, b){
             return c.childNodes[1].id > b.childNodes[1].id
          }).each(function() {
-            $(this).appendTo(".end")
+            $(this).appendTo($(this).parent())
          })
       })
 
 
       $(".count").click(function(){
-         $(".alphabetical").css('color', '#000000')
-         $(".alphabetical").css('cursor', 'pointer')
-         $(this).css('color', '#3644FF')
-         $(this).css('cursor', 'pointer')
-
+         $(".alphabetical").css('color', '#000000', 'cursor', 'pointer')
+         $(this).css('color', '#3644FF', 'cursor', 'pointer')
          $(".end a").sort(function(c, b){
             return parseInt(b.childNodes[2].id) > parseInt(c.childNodes[2].id)
          }).each(function() {
-            $(this).appendTo(".end")
+            $(this).appendTo($(this).parent())
          })
       })
 
-      $("#group").click(function(){
-         console.log(this)
+      $(".count-persons").click(function(){
+         $(".alphabetical").css('color', '#000000', 'color', '#3644FF')
+         $(this).css('color', '#3644FF', 'color', '#3644FF')
+         $(".end a").sort(function(c, b){
+            return parseInt(b.childNodes[3].id) > parseInt(c.childNodes[3].id)
+         }).each(function() {
+            $(this).appendTo($(this).parent())
+         })
       })
 
       $( "#dialog-message" ).hide()
@@ -187,17 +244,13 @@ html
       
        
       $('.all-select').click(function(){
-          console.log(this)
           currentNode = this.nextElementSibling.childNodes
           var names = []
-          console.log(currentNode.length)
-
           for (var i = 0; i < currentNode.length; i++) {   
             var child = currentNode[i].childNodes[1]
             if (!$(child).hasClass("selected")){
                 var name = child.id
                 $(child).toggleClass("selected")
-                //$(child.nextElementSibling).toggleClass("selected")
                 names.push(name)
             }
           }

@@ -22,17 +22,26 @@ block content
   p.lead 
   .row
     .col-md-12
-      h4 Select one album  
-
-      form( target="_blank" ,method="POST", action="/info")
-        input(hidden class="input" type="text" name="album" size="120")
-        input(hidden type="text" name="years" value=yearsQuery)
-        input(hidden type="text" name="countries" value=countriesQuery)
-        input(hidden type="text" name="labels" value=labelsQuery)
-        input(hidden type="text" name="artists" value=artistsQuery)
-        each index, val in albumsObj
-            p
-            button(class="choosealbum" style="cursor: pointer" )= val
-            a(hidden name="id")= hidden[val]
-            a(style="color: #777777")= " "+index 
+        .row
+            .container.text-center
+                h4.float-left Select one album
+                a.float-right Sort by: 
+                    button(class="btn-default title-sort" style="cursor: pointer") title
+                    button(class="btn-default artist-sort" style="cursor: pointer")  artist
+                    button(class="btn-default label-sort" style="cursor: pointer")  label
+                    button(class="btn-default year-sort" style="cursor: pointer")  year
+        
+        .row
+            .container
+                form( target="_blank" ,method="POST", action="/info")
+                  input(hidden class="input" type="text" name="album" size="120")
+                  input(hidden type="text" name="years" value=yearsQuery)
+                  input(hidden type="text" name="countries" value=countriesQuery)
+                  input(hidden type="text" name="labels" value=labelsQuery)
+                  input(hidden type="text" name="artists" value=artistsQuery)
+                  each index, val in albumsObj
+                      p(class="each-album")
+                          button(class="choosealbum" style="cursor: pointer", id=val)= val
+                          a(hidden name="id" id=hidden[val])= hidden[val]
+                          a(style="color: #777777" id=index)= " "+index 
         

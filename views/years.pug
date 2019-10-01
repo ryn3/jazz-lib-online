@@ -12,25 +12,32 @@ block content
   p.lead 
   .row
     .col-md-12
-      h4 Select decade(s) or year(s)
+        .row
+            .container.text-center
+                h4.float-left Select decade(s) or year(s)
+                a.float-right Sort by: 
+                    button(class="btn-default alphabetical" style="color: #3644FF; cursor: pointer") alphabetical
+                    button(class="btn-default count" style="cursor: pointer")  count
+        .row
+            .container
+                p 
+                    each val, index in decadesObj
+                        text(class="choose" style="color: #3644FF; cursor: pointer")= index + ": "  
+                        text(style="color: #777777")= val + ", "
 
-      p 
-          each val, index in decadesObj
-            text(class="choose" style="color: #3644FF; cursor: pointer")= index + ": "  
-            text(style="color: #777777")= val + ", "
-      
-      a(class="all-years" style="cursor: pointer") select all
-      p
-          each val, index in yearsObj
-            text(class="choose" style="color: #3644FF; cursor: pointer")= index + ": "  
-            text(style="color: #777777")= val + ", "
+        .row
+            .container
+                a(class="all-select" style="cursor: pointer") select all
+                p(class="end")
+                    each val, index in yearsObj
+                        a(id="group") 
+                            text(class="choose" style="color: #3644FF; cursor: pointer" id=index)= index + ": "  
+                            text(class="album-count", style="color: #777777", id=val)= val + ", "
     
-      form(method="POST", action="/countries")
-        input(class="input" type="text" name="years" size="90")
-        input(class="btn-default save" id="years" type="submit" value="Next") 
-      button(class="btn-default" id="clear-me" style="cursor: pointer") Clear
-
-    
+        form(method="POST", action="/countries")
+            input(class="input" type="text" name="years" size="90")
+            input(class="btn-default" type="submit" value="Next") 
+        button(class="btn-default" id="clear-me" style="cursor: pointer") Clear
 
 
 

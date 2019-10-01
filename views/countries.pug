@@ -15,22 +15,25 @@ block content
   p.lead 
   .row
     .col-md-12
-      h4 Select one or more countries
+        .row
+            .container.text-center
+                h4.float-left Select one or more countries
+                a.float-right Sort by: 
+                    button(class="btn-default alphabetical" style="cursor: pointer") alphabetical
+                    button(class="btn-default count" style="color: #3644FF; cursor: pointer")  count
+        
+        .row
+            .container
+                a(class="all-select" style="cursor: pointer") select all
+                p(class="end")
+                    each index in countriesObj
+                        a(id="group") 
+                            text(class="choose" style="color: #3644FF; cursor: pointer" id=index)= index + ": "  
+                            text(class="album-count", style="color: #777777", id=countriesKVObj[index])= countriesKVObj[index] + ", "
     
-      p
-      a(class="all-years" style="cursor: pointer") select all
-      p
-          each index in countriesObj
-            text(class="choose" style="color: #3644FF; cursor: pointer")= index + ": "  
-            text(style="color: #777777")= countriesKVObj[index] + ", "
-    
-      form(method="POST", action="/labels")
-        input(class="input" type="text" name="countries" size="90")
-        input(hidden type="text" name="years" value=yearQuery)
-        input(class="btn-default" type="submit" value="Next") 
-      button(class="btn-default" id="clear-me" style="cursor: pointer") Clear
-
-    
-
-
+        form(method="POST", action="/labels")
+            input(class="input" type="text" name="countries" size="90")
+            input(hidden type="text" name="years" value=yearsQuery)
+            input(class="btn-default" type="submit" value="Next") 
+        button(class="btn-default" id="clear-me" style="cursor: pointer") Clear
 

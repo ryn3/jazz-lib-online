@@ -186,18 +186,18 @@ html
         })});
       
        
-      $('.all-years').click(function(){
+      $('.all-select').click(function(){
           console.log(this)
           currentNode = this.nextElementSibling.childNodes
           var names = []
           console.log(currentNode.length)
-          for (var i = 0; i < currentNode.length; i+=2) {   
-            var child = currentNode[i]
+
+          for (var i = 0; i < currentNode.length; i++) {   
+            var child = currentNode[i].childNodes[1]
             if (!$(child).hasClass("selected")){
-                var name = child.textContent
+                var name = child.id
                 $(child).toggleClass("selected")
                 //$(child.nextElementSibling).toggleClass("selected")
-                name = name.substring(0,name.length-2)
                 names.push(name)
             }
           }

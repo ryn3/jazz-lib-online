@@ -30,7 +30,7 @@ block content
                 p(class="end")
                     each index in labelsObj
                         a(id="group") 
-                            text(class="choose" style="color: #3644FF; cursor: pointer" id=index)= index + ": "  
+                            text(class="choose" style="color: #3644FF; cursor: pointer" id=index)= "'" + index + "': "  
                             text(class="album-count", style="color: #777777", id=labelsKVObj[index])= labelsKVObj[index] + ", "
     
         form(method="POST", action="/artists")

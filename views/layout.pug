@@ -254,9 +254,10 @@ html
                 names.push(name)
             }
           }
-          names.forEach(function(name){
-             $(".input").val($(".input").val() + name + "; ")
-          })
+          //names.forEach(function(name){
+          //   $(".input").val($(".input").val() + name + "; ")
+          //})
+          $(".input").val($(".input").val() + "(all selected); ")
       })
 
 

@@ -147,7 +147,6 @@ var allCountries = {
 var countriesSorted = ['US', 'UK', 'Germany', 'France', 'Italy', 'Japan', 'Europe', 'Netherlands', 'Canada', 'Sweden', 'Brazil', 'Spain', 'USSR', 'Denmark', 'Poland', 'Switzerland', 'Australia', 'Norway', 'undefined', 'Czechoslovakia', 'Belgium', 'Finland', 'UK & Europe', 'Austria', 'Russia', 'Greece', 'USA & Canada', 'Yugoslavia', 'Portugal', 'German Democratic Republic (GDR)', 'Romania', 'Hungary', 'Argentina', 'New Zealand', 'Bulgaria', 'Scandinavia', 'South Africa', 'Czech Republic', 'Mexico', 'Cuba', 'Turkey', 'UK, Europe & US', 'Nigeria', 'Venezuela', 'Benelux', 'India', 'Israel', 'Lithuania', 'Colombia', 'Iceland', 'Germany, Austria, & Switzerland', 'Hong Kong', 'Croatia', 'Chile', 'UK & Ireland', 'South Korea', 'Jamaica', 'France & Benelux', 'Australia & New Zealand', 'Indonesia', 'Serbia', 'Slovakia', 'Ukraine', 'UK & US', 'Uruguay', 'Taiwan', 'Slovenia', 'Lebanon', 'Thailand', 'Singapore', 'Peru', 'Ireland', 'Malaysia', 'Luxembourg', 'USA, Canada & Europe', 'Trinidad & Tobago', 'USA, Canada & UK', 'Macedonia', 'Philippines', 'Estonia', 'Reunion', 'Ethiopia', 'USA & Europe', 'Serbia and Montenegro', 'Puerto Rico', 'North America (inc Mexico)', 'Egypt', 'Guadeloupe', 'Senegal', 'Germany & Switzerland', 'Faroe Islands', 'Guinea', 'Barbados', 'Haiti', 'Middle East', 'Madagascar', 'UK & France', 'Ghana', 'Czech Republic & Slovakia', 'Ivory Coast', 'Pakistan', 'UK, Europe & Japan', 'Asia', 'Australasia', 'Andorra', 'Panama', 'Kenya', 'Martinique', 'Monaco', 'Latvia', 'Dominican Republic', 'Congo, Democratic Republic of the', 'United Arab Emirates', 'China', 'Protectorate of Bohemia and Moravia', 'Bolivia', 'Costa Rica', 'Singapore, Malaysia & Hong Kong', 'Angola',
     'Cyprus', 'Saint Vincent and the Grenadines', 'Kuwait', 'Mongolia', 'Nicaragua', 'Zaire', 'Zimbabwe', 'Cambodia', 'El Salvador', 'Montenegro',
     'Morocco', 'Cape Verde', 'Moldova, Republic of', 'Guatemala', 'Malta', 'Saint Lucia', 'Togo']
-//var allLabels = 
 
 exports.getHome = (req, res) => {
     yearArray = {
@@ -250,8 +249,6 @@ exports.postYears = (req, res) => {
 
 }
 
-
-
 exports.postCountries = (req, res) => {
     /**
       normalize country query  
@@ -266,171 +263,54 @@ exports.postCountries = (req, res) => {
     var countriesQuery = qArray
 
     if (yearsQuery.includes("(all selected)") && query.includes("(all selected)")) {
-        console.log("*****case 1")
-        Album.find({}, 'releases.release.labels', function (err, labels) {
+        //console.log("*****case 1")
+        Album.find({}, 'releases.release.extraartists', function (err, releases) {
             if (err) {
                 console.log(err)
             } else {
-                postCountriesFunc(labels, countriesQuery, yearsQuery, res)
+                postCountriesFunc(releases, countriesQuery, yearsQuery, res)
 
             }
         })
     } else if (query.includes("(all selected)") && !yearsQuery.includes("(all selected)")) {
-        console.log("*****case 2")
+        //console.log("*****case 2")
         Album.find({
             'releases.release.released': { '$in': yearsArrayFinal }
-        }, 'releases.release.labels', function (err, labels) {
+        }, 'releases.release.extraartists', function (err, releases) {
             if (err) {
                 console.log(err)
             } else {
-                postCountriesFunc(labels, countriesQuery, yearsQuery, res)
+                postCountriesFunc(releases, countriesQuery, yearsQuery, res)
             }
         })
     } else if (!query.includes("(all selected)") && yearsQuery.includes("(all selected)")) {
-        console.log("*****case 3")
+        //console.log("*****case 3")
 
         Album.find({
             'releases.release.country': { '$in': countriesArrayFinal }
-        }, 'releases.release.labels', function (err, labels) {
+        }, 'releases.release.extraartists', function (err, releases) {
             if (err) {
                 console.log(err)
             } else {
-                postCountriesFunc(labels, countriesQuery, yearsQuery, res)
+                postCountriesFunc(releases, countriesQuery, yearsQuery, res)
             }
         })
 
     } else {
-        console.log("*****case 4")
+        //console.log("*****case 4")
 
         Album.find({
             'releases.release.country': { '$in': countriesArrayFinal },
             'releases.release.released': { '$in': yearsArrayFinal }
-        }, 'releases.release.labels', function (err, labels) {
+        }, 'releases.release.extraartists', function (err, releases) {
             if (err) {
                 console.log(err)
             } else {
-                postCountriesFunc(labels, countriesQuery, yearsQuery, res)
+                postCountriesFunc(releases, countriesQuery, yearsQuery, res)
             }
         })
 
     }
-}
-
-exports.postLabels = (req, res) => {
-    /**
-      normalize label query  
-
-    **/
-    //console.log(req.body)
-    var yearsQuery = req.body.years
-    var countriesQuery = req.body.countries
-    query = req.body.labels
-    qArray = query.split("; ")
-    qArray.pop()
-    //console.log(qArray)
-    var labelsQuery = qArray
-    labelsArrayFinal = qArray
-
-    if (yearsQuery.includes("(all selected)") && countriesQuery.includes("(all selected)") && query.includes("(all selected)")) {
-        Album.find({}, 'releases.release', function (err, releases) {
-
-            if (err) {
-                console.log(err)
-            } else {
-                postLabelsFunc(releases, labelsQuery, countriesQuery, yearsQuery, res)
-            }
-        })
-
-
-    } else if (yearsQuery.includes("(all selected)") && countriesQuery.includes("(all selected)") && !query.includes("(all selected)")) {
-        Album.find({
-            'releases.release.labels.label.@name': { '$in': labelsArrayFinal }
-        }, 'releases.release', function (err, releases) {
-
-            if (err) {
-                console.log(err)
-            } else {
-                postLabelsFunc(releases, labelsQuery, countriesQuery, yearsQuery, res)
-            }
-        })
-
-    } else if (yearsQuery.includes("(all selected)") && !countriesQuery.includes("(all selected)") && query.includes("(all selected)")) {
-        Album.find({
-            'releases.release.country': { '$in': countriesArrayFinal }
-        }, 'releases.release', function (err, releases) {
-
-            if (err) {
-                console.log(err)
-            } else {
-                postLabelsFunc(releases, labelsQuery, countriesQuery, yearsQuery, res)
-            }
-        })
-
-    } else if (!yearsQuery.includes("(all selected)") && countriesQuery.includes("(all selected)") && query.includes("(all selected)")) {
-        Album.find({
-            'releases.release.released': { '$in': yearsArrayFinal },
-        }, 'releases.release', function (err, releases) {
-
-            if (err) {
-                console.log(err)
-            } else {
-                postLabelsFunc(releases, labelsQuery, countriesQuery, yearsQuery, res)
-            }
-        })
-    } else if (yearsQuery.includes("(all selected)") && !countriesQuery.includes("(all selected)") && !query.includes("(all selected)")) {
-        Album.find({
-            'releases.release.country': { '$in': countriesArrayFinal },
-            'releases.release.labels.label.@name': { '$in': labelsArrayFinal }
-        }, 'releases.release', function (err, releases) {
-
-            if (err) {
-                console.log(err)
-            } else {
-                postLabelsFunc(releases, labelsQuery, countriesQuery, yearsQuery, res)
-            }
-        })
-    } else if (!yearsQuery.includes("(all selected)") && !countriesQuery.includes("(all selected)") && query.includes("(all selected)")) {
-        Album.find({
-            'releases.release.country': { '$in': countriesArrayFinal },
-            'releases.release.released': { '$in': yearsArrayFinal }
-        }, 'releases.release', function (err, releases) {
-
-            if (err) {
-                console.log(err)
-            } else {
-                postLabelsFunc(releases, labelsQuery, countriesQuery, yearsQuery, res)
-            }
-        })
-
-    } else if (!yearsQuery.includes("(all selected)") && countriesQuery.includes("(all selected)") && !query.includes("(all selected)")) {
-        Album.find({
-            'releases.release.released': { '$in': yearsArrayFinal },
-            'releases.release.labels.label.@name': { '$in': labelsArrayFinal }
-        }, 'releases.release', function (err, releases) {
-
-            if (err) {
-                console.log(err)
-            } else {
-                postLabelsFunc(releases, labelsQuery, countriesQuery, yearsQuery, res)
-            }
-        })
-
-    } else {
-        Album.find({
-            'releases.release.country': { '$in': countriesArrayFinal },
-            'releases.release.released': { '$in': yearsArrayFinal },
-            'releases.release.labels.label.@name': { '$in': labelsArrayFinal }
-        }, 'releases.release', function (err, releases) {
-
-            if (err) {
-                console.log(err)
-            } else {
-                postLabelsFunc(releases, labelsQuery, countriesQuery, yearsQuery, res)
-            }
-        })
-    }
-        
-
 }
 
 exports.postArtists = (req, res) => {
@@ -438,81 +318,225 @@ exports.postArtists = (req, res) => {
       normalize label query  
 
     **/
+    //console.log(req.body)
+    var yearsQuery = req.body.years
+    var countriesQuery = req.body.countries
     query = req.body.artists
     qArray = query.split("; ")
     qArray.pop()
-    //console.log(qArray)
+    console.log('your selected artists: ')
+    console.log(qArray)
     artistsArrayFinal = qArray
+
+
+
+    //Album.find({
+    //    'releases.release.released': { '$in': yearsArrayFinal },
+    //    'releases.release.country': { '$in': countriesArrayFinal }
+    //}, 'releases.release.extraartists', function (err, releases) {
+    //    if (err) {
+    //        console.log(err)
+    //    } else {
+    //        console.log("~~~case 1")
+    //        postArtistsFunc(releases, countriesArrayFinal, yearsArrayFinal, res)
+    //    }
+
+
+    //})
+
+    if (yearsQuery.includes("(all selected)") && countriesQuery.includes("(all selected)")) {
+        Album.find({
+            'releases.release.extraartists.artist.name': { '$in': artistsArrayFinal }
+        }, 'releases.release.labels', function (err, releases) {
+
+            if (err) {
+                console.log(err)
+            } else {
+                //console.log("~~~case 1")
+
+                postArtistsFunc(releases, countriesArrayFinal, yearsArrayFinal, artistsArrayFinal, res)
+            }
+        })
+
+
+    } else if (yearsQuery.includes("(all selected)") && !countriesQuery.includes("(all selected)")) {
+        Album.find({
+            'releases.release.country': { '$in': countriesArrayFinal },
+            'releases.release.extraartists.artist.name': { '$in': artistsArrayFinal }
+        }, 'releases.release.labels', function (err, releases) {
+
+            if (err) {
+                console.log(err)
+            } else {
+                //console.log("~~~case 2")
+
+                postArtistsFunc(releases, countriesArrayFinal, yearsArrayFinal, artistsArrayFinal, res)
+            }
+        })
+
+    } else if (!yearsQuery.includes("(all selected)") && countriesQuery.includes("(all selected)")) {
+        Album.find({
+            'releases.release.released': { '$in': yearsArrayFinal },
+            'releases.release.extraartists.artist.name': { '$in': artistsArrayFinal }
+        }, 'releases.release.labels', function (err, releases) {
+
+            if (err) {
+                console.log(err)
+            } else {
+                //console.log("~~~case 3")
+
+                postArtistsFunc(releases, countriesArrayFinal, yearsArrayFinal, artistsArrayFinal, res)
+            }
+        })
+    }  else {
+        Album.find({
+            'releases.release.country': { '$in': countriesArrayFinal },
+            'releases.release.released': { '$in': yearsArrayFinal },
+            'releases.release.extraartists.artist.name': {'$in': artistsArrayFinal}
+        }, 'releases.release.labels', function (err, releases) {
+
+            if (err) {
+                console.log(err)
+            } else {
+                //console.log("~~~case 4")
+                postArtistsFunc(releases, countriesArrayFinal, yearsArrayFinal, artistsArrayFinal, res)
+            }
+        })
+    }
+        
+
+}
+
+exports.postLabels = (req, res) => {
+    /**
+      normalize label query  
+
+    **/
+    query = req.body.labels
+    qArray = query.split("; ")
+    qArray.pop()
+    //console.log(qArray)
+    labelsArrayFinal = qArray
     var yearsQuery = req.body.years
     var countriesQuery = req.body.countries
-    var labelsQuery = req.body.labels
-    var artistsQuery = qArray
+    var labelsQuery = qArray
+    var artistsQuery = artistsArrayFinal
 
-    Album.find({
-        'releases.release.country': { '$in': countriesArrayFinal },
-        'releases.release.released': { '$in': yearsArrayFinal },
-        'releases.release.labels.label.@name': { '$in': labelsArrayFinal },
-        'releases.release.extraartists.artist.name': {'$in': artistsArrayFinal}
-    }, 'releases.release', function (err, titles) {
+    if (!yearsQuery.includes("(all selected)") && !countriesQuery.includes("(all selected)") && !labelsQuery.includes("(all selected)")) {
+        Album.find({
+            'releases.release.country': { '$in': countriesArrayFinal },
+            'releases.release.released': { '$in': yearsArrayFinal },
+            'releases.release.labels.label.@name': { '$in': labelsArrayFinal },
+            'releases.release.extraartists.artist.name': { '$in': artistsArrayFinal }
+        }, 'releases.release', function (err, titles) {
 
-        if (err) {
-            console.log(err)
-        } else {
-            //console.log(titles)
-
-            var titlesArray = {}
-            var hidden = {}
-            titles.forEach(function (one_title) {
-                try {
-                    //console.log('this is one_person: ' + one_title)
-                    year = one_title._doc.releases.release.released.substring(0, 4)
-                    label = one_title._doc.releases.release.labels.label['@name']
-                    if (label == undefined) {
-                        //console.log("undefined label")
-                        label = one_title._doc.releases.release.labels.label[0]['@name']
-                    }
-                    country = one_title._doc.releases.release.country
-                    title = one_title._doc.releases.release.title
-                    artist = one_title._doc.releases.release.artists.artist.name
-                    
-                    if (artist == undefined) {
-                        console.log("undefined artist")
-                        artist = one_title._doc.releases.release.artists.artist[0].name
-                    }
-                    console.log(artist)
-                    id = one_title._doc.releases.release['@id']
-                    //console.log('this is title: '+title)
-                    hidden[title] = id
-                    titlesArray[title] = artist+":  "+label+", "+country+ " " + year
-                    
-                } catch (e) {
-                }
-            })
-
-            var keysSorted = Object.keys(titlesArray).sort(function (a, b) { return titlesArray[b] - titlesArray[a] })
-            var output = {}
-            keysSorted.forEach(function (key) {
-                output[key]
-            })
-            all = {
-                'all': 0
+            if (err) {
+                console.log(err)
+            } else {
+                postLabelsFunc(titles, labelsQuery, countriesQuery, yearsQuery, artistsQuery, res)
             }
-            keysSorted.forEach(function (artist) {
-                all['all'] += titlesArray[artist]
-            })
+        })
 
-            res.render('albums', {
-                title: 'albums',
-                albumsObj: titlesArray,
-                hidden: hidden,
-                yearsQuery: yearsQuery,
-                countriesQuery: countriesQuery,
-                labelsQuery: labelsQuery,
-                artistsQuery: artistsQuery
+    }
+    else if (!yearsQuery.includes("(all selected)") && !countriesQuery.includes("(all selected)")) {
+        Album.find({
+            'releases.release.country': { '$in': countriesArrayFinal },
+            'releases.release.released': { '$in': yearsArrayFinal },
+            'releases.release.extraartists.artist.name': { '$in': artistsArrayFinal }
+        }, 'releases.release', function (err, titles) {
 
-            })
-        }
-    })
+            if (err) {
+                console.log(err)
+            } else {
+                postLabelsFunc(titles, labelsQuery, countriesQuery, yearsQuery, artistsQuery, res)
+            }
+        })
+
+    }
+    else if (!yearsQuery.includes("(all selected)") && !labelsQuery.includes("(all selected)")) {
+        Album.find({
+            'releases.release.labels.label.@name': { '$in': labelsArrayFinal },
+            'releases.release.released': { '$in': yearsArrayFinal },
+            'releases.release.extraartists.artist.name': { '$in': artistsArrayFinal }
+        }, 'releases.release', function (err, titles) {
+
+            if (err) {
+                console.log(err)
+            } else {
+                postLabelsFunc(titles, labelsQuery, countriesQuery, yearsQuery, artistsQuery, res)
+            }
+        })
+
+
+    }
+    else if (!countriesQuery.includes("(all selected)") && !labelsQuery.includes("(all selected)")) {
+        Album.find({
+            'releases.release.labels.label.@name': { '$in': labelsArrayFinal },
+            'releases.release.country': { '$in': countriesArrayFinal },
+            'releases.release.extraartists.artist.name': { '$in': artistsArrayFinal }
+        }, 'releases.release', function (err, titles) {
+
+            if (err) {
+                console.log(err)
+            } else {
+                postLabelsFunc(titles, labelsQuery, countriesQuery, yearsQuery, artistsQuery, res)
+            }
+        })
+
+    }
+    else if (!yearsQuery.includes("(all selected)")) {
+        Album.find({
+            'releases.release.released': { '$in': yearsArrayFinal },
+            'releases.release.extraartists.artist.name': { '$in': artistsArrayFinal }
+        }, 'releases.release', function (err, titles) {
+
+            if (err) {
+                console.log(err)
+            } else {
+                postLabelsFunc(titles, labelsQuery, countriesQuery, yearsQuery, artistsQuery, res)
+            }
+        })
+    }
+    else if (!countriesQuery.includes("(all selected)")) {
+        Album.find({
+            'releases.release.country': { '$in': countriesArrayFinal },
+            'releases.release.extraartists.artist.name': { '$in': artistsArrayFinal }
+        }, 'releases.release', function (err, titles) {
+
+            if (err) {
+                console.log(err)
+            } else {
+                postLabelsFunc(titles, labelsQuery, countriesQuery, yearsQuery, artistsQuery, res)
+            }
+        })
+
+    }
+    else if (!labelsQuery.includes("(all selected)")) {
+        Album.find({
+            'releases.release.labels.label.@name': { '$in': labelsArrayFinal },
+            'releases.release.extraartists.artist.name': { '$in': artistsArrayFinal }
+        }, 'releases.release', function (err, titles) {
+
+            if (err) {
+                console.log(err)
+            } else {
+                postLabelsFunc(titles, labelsQuery, countriesQuery, yearsQuery, artistsQuery, res)
+            }
+        })
+    }
+    else {
+
+        Album.find({
+            'releases.release.extraartists.artist.name': { '$in': artistsArrayFinal }
+        }, 'releases.release', function (err, titles) {
+
+            if (err) {
+                console.log(err)
+            } else {
+                postLabelsFunc(titles, labelsQuery, countriesQuery, yearsQuery, artistsQuery, res)
+            }
+        })
+    }
 
 }
 
@@ -589,48 +613,7 @@ function postYearsFunc(countries, newQuery, res) {
 
 }
 
-function postCountriesFunc(labels, countriesQuery, yearsQuery, res) {
-    //console.log(labels)
-    var labelArray = {}
-
-    labels.forEach(function (one_label) {
-        try {
-            newLabel = one_label._doc.releases.release.labels.label['@name']
-            if (newLabel == undefined) {
-                //console.log("undefined label")
-                newLabel = one_label._doc.releases.release.labels.label[0]['@name']
-            }
-            if (newLabel in labelArray) {
-                labelArray[newLabel]++
-            } else {
-                labelArray[newLabel] = 1
-            }
-
-        } catch (e) {
-        }
-    })
-    var keysSorted = Object.keys(labelArray).sort(function (a, b) { return labelArray[b] - labelArray[a] })
-
-    all = {
-        'all': 0
-    }
-    keysSorted.forEach(function (label) {
-        all['all'] += labelArray[label]
-    })
-
-    res.render('labels', {
-        title: 'Labels',
-        labelsObj: keysSorted,
-        labelsKVObj: labelArray,
-        allObj: all,
-        yearsQuery: yearsQuery.toString(),
-        countriesQuery: countriesQuery.toString()
-    })
-
-
-}
-
-function postLabelsFunc(releases, labelsQuery, countriesQuery, yearsQuery, res) {
+function postCountriesFunc(releases, countriesQuery, yearsQuery, res) {
     var personnelArray = {}
     var roleArray = {}
     releases.forEach(function (one_release) {
@@ -667,7 +650,7 @@ function postLabelsFunc(releases, labelsQuery, countriesQuery, yearsQuery, res) 
     keysSorted.forEach(function (artist) {
         all['all'] += personnelArray[artist]
     })
-
+    
     res.render('artists', {
         title: 'Artists',
         //artistsObj: artistArray,
@@ -677,9 +660,118 @@ function postLabelsFunc(releases, labelsQuery, countriesQuery, yearsQuery, res) 
         allObj: all,
         yearsQuery: yearsQuery.toString(),
         countriesQuery: countriesQuery.toString(),
-        labelsQuery: labelsQuery.toString()
+    })
+
+
+    //
+    //
+    //
+
+
+
+}
+
+
+function postArtistsFunc(labels, countriesQuery, yearsQuery, artistsQuery, res) {
+    console.log(labels)
+    var labelArray = {}
+
+    labels.forEach(function (one_label) {
+        try {
+            newLabel = one_label._doc.releases.release.labels.label['@name']
+            if (newLabel == undefined) {
+                //console.log("undefined label")
+                newLabel = one_label._doc.releases.release.labels.label[0]['@name']
+            }
+            if (newLabel in labelArray) {
+                labelArray[newLabel]++
+            } else {
+                labelArray[newLabel] = 1
+            }
+
+        } catch (e) {
+        }
+    })
+    var keysSorted = Object.keys(labelArray).sort(function (a, b) { return labelArray[b] - labelArray[a] })
+
+    all = {
+        'all': 0
+    }
+    keysSorted.forEach(function (label) {
+        all['all'] += labelArray[label]
+    })
+
+
+    res.render('labels', {
+        title: 'labels',
+        yearsQuery: yearsQuery,
+        countriesQuery: countriesQuery,
+        labelsKVObj: labelArray,
+        labelsObj: keysSorted,
+        artistsQuery: artistsQuery
+
     })
 
 
 
 }
+
+function postLabelsFunc(titles, labelsQuery, countriesQuery, yearsQuery, artistsQuery, res) {
+
+    //console.log(titles)
+
+    var titlesArray = {}
+    var hidden = {}
+    titles.forEach(function (one_title) {
+        try {
+            //console.log('this is one_person: ' + one_title)
+            year = one_title._doc.releases.release.released.substring(0, 4)
+            label = one_title._doc.releases.release.labels.label['@name']
+            if (label == undefined) {
+                //console.log("undefined label")
+                label = one_title._doc.releases.release.labels.label[0]['@name']
+            }
+            country = one_title._doc.releases.release.country
+            title = one_title._doc.releases.release.title
+            artist = one_title._doc.releases.release.artists.artist.name
+
+            if (artist == undefined) {
+                console.log("undefined artist")
+                artist = one_title._doc.releases.release.artists.artist[0].name
+            }
+            console.log(artist)
+            id = one_title._doc.releases.release['@id']
+            //console.log('this is title: '+title)
+            hidden[title] = id
+            titlesArray[title] = artist + ":  " + label + ", " + country + " " + year
+
+        } catch (e) {
+        }
+    })
+
+    var keysSorted = Object.keys(titlesArray).sort(function (a, b) { return titlesArray[b] - titlesArray[a] })
+    var output = {}
+    keysSorted.forEach(function (key) {
+        output[key]
+    })
+    all = {
+        'all': 0
+    }
+    keysSorted.forEach(function (artist) {
+        all['all'] += titlesArray[artist]
+    })
+
+    res.render('albums', {
+        title: 'albums',
+        albumsObj: titlesArray,
+        hidden: hidden,
+        yearsQuery: yearsQuery,
+        countriesQuery: countriesQuery,
+        labelsQuery: labelsQuery,
+        artistsQuery: artistsQuery
+
+    })
+
+
+}
+

@@ -11,11 +11,10 @@ block content
   a(style="color: #3644FF" class="years-input")  countries
   a(hidden)= countriesQuery
   a  >
-  a(style="color: #3644FF" class="years-input")  labels
+  a(style="color: #3644FF" class="years-input")  personnel
   a(hidden)= labelsQuery
   a  >
-  a(style="color: #3644FF")  personnel
-  a  > album
+  a  labels > album
   hr
   p.lead 
   .row
@@ -176,11 +175,10 @@ block content
                     text(style="color: #777777; font-size: 14px" id=personnelObj2[index])= personnelObj2[index] + ", "
   
       p
-      form(method="POST", action="/albums")
+      form(method="POST", action="/labels")
         input(class="input" type="text" name="artists" size="90")
         input(hidden type="text" name="years" value=yearsQuery)
         input(hidden type="text" name="countries" value=countriesQuery)
-        input(hidden type="text" name="labels" value=labelsQuery)
         input(class="btn-default" type="submit" value="Next") 
       button(class="btn-default" id="clear-me" style="cursor: pointer") Clear
 

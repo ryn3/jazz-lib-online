@@ -10,7 +10,7 @@ block content
   a  >
   a(style="color: #3644FF")  countries
 
-  a  > labels > personnel > album
+  a  > personnel > labels > album
   hr
   p.lead 
   .row
@@ -31,7 +31,7 @@ block content
                             text(class="choose" style="color: #3644FF; cursor: pointer" id=index)= index + ": "  
                             text(class="album-count", style="color: #777777", id=countriesKVObj[index])= countriesKVObj[index] + ", "
     
-        form(method="POST", action="/labels")
+        form(method="POST", action="/artists")
             input(class="input" type="text" name="countries" size="90")
             input(hidden type="text" name="years" value=yearsQuery)
             input(class="btn-default" type="submit" value="Next") 

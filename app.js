@@ -131,9 +131,9 @@ app.get('/', homeController.getHome);
 app.get('/years', homeController.getYears);
 app.post('/countries', homeController.postYears);
 //app.post('/')
-app.post('/labels', homeController.postCountries);
-app.post('/artists', homeController.postLabels);
-app.post('/albums', homeController.postArtists);
+app.post('/labels', homeController.postArtists);
+app.post('/artists', homeController.postCountries);
+app.post('/albums', homeController.postLabels);
 app.post('/info', homeController.postAlbum);
 app.get('/about', homeController.getAbout)
 //app.get('/years', homeController.firstNext);

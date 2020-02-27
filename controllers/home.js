@@ -224,7 +224,7 @@ exports.postYears = (req, res) => {
     if (!query.includes("(all selected)")) {
         Album.find({
             'releases.release.released': { '$in': newQuery }
-        }, 'releases.release.country', function (err, countries) {
+		}, { 'releases.release.country': 1, '_id':0}, function (err, countries) {
 
                 if (err) {
                     console.log(err)
@@ -264,7 +264,7 @@ exports.postCountries = (req, res) => {
 
     if (yearsQuery.includes("(all selected)") && query.includes("(all selected)")) {
         //console.log("*****case 1")
-        Album.find({}, 'releases.release.extraartists', function (err, releases) {
+		Album.find({}, { 'releases.release.extraartists': 1, '_id': 0 }, function (err, releases) {
             if (err) {
                 console.log(err)
             } else {
@@ -276,7 +276,7 @@ exports.postCountries = (req, res) => {
         //console.log("*****case 2")
         Album.find({
             'releases.release.released': { '$in': yearsArrayFinal }
-        }, 'releases.release.extraartists', function (err, releases) {
+		}, { 'releases.release.extraartists': 1, '_id': 0 }, function (err, releases) {
             if (err) {
                 console.log(err)
             } else {
@@ -288,7 +288,7 @@ exports.postCountries = (req, res) => {
 
         Album.find({
             'releases.release.country': { '$in': countriesArrayFinal }
-        }, 'releases.release.extraartists', function (err, releases) {
+		}, { 'releases.release.extraartists': 1, '_id': 0 }, function (err, releases) {
             if (err) {
                 console.log(err)
             } else {
@@ -302,7 +302,7 @@ exports.postCountries = (req, res) => {
         Album.find({
             'releases.release.country': { '$in': countriesArrayFinal },
             'releases.release.released': { '$in': yearsArrayFinal }
-        }, 'releases.release.extraartists', function (err, releases) {
+		}, { 'releases.release.extraartists':1, '_id':0}, function (err, releases) {
             if (err) {
                 console.log(err)
             } else {
@@ -328,22 +328,6 @@ exports.postArtists = (req, res) => {
     console.log(qArray)
     artistsArrayFinal = qArray
 
-
-
-    //Album.find({
-    //    'releases.release.released': { '$in': yearsArrayFinal },
-    //    'releases.release.country': { '$in': countriesArrayFinal }
-    //}, 'releases.release.extraartists', function (err, releases) {
-    //    if (err) {
-    //        console.log(err)
-    //    } else {
-    //        console.log("~~~case 1")
-    //        postArtistsFunc(releases, countriesArrayFinal, yearsArrayFinal, res)
-    //    }
-
-
-    //})
-
     if (yearsQuery.includes("(all selected)") && countriesQuery.includes("(all selected)")) {
         Album.find({
             'releases.release.extraartists.artist.name': { '$in': artistsArrayFinal }
@@ -352,12 +336,9 @@ exports.postArtists = (req, res) => {
             if (err) {
                 console.log(err)
             } else {
-                //console.log("~~~case 1")
-
                 postArtistsFunc(releases, countriesArrayFinal, yearsArrayFinal, artistsArrayFinal, res)
             }
         })
-
 
     } else if (yearsQuery.includes("(all selected)") && !countriesQuery.includes("(all selected)")) {
         Album.find({
@@ -368,8 +349,6 @@ exports.postArtists = (req, res) => {
             if (err) {
                 console.log(err)
             } else {
-                //console.log("~~~case 2")
-
                 postArtistsFunc(releases, countriesArrayFinal, yearsArrayFinal, artistsArrayFinal, res)
             }
         })
@@ -383,8 +362,6 @@ exports.postArtists = (req, res) => {
             if (err) {
                 console.log(err)
             } else {
-                //console.log("~~~case 3")
-
                 postArtistsFunc(releases, countriesArrayFinal, yearsArrayFinal, artistsArrayFinal, res)
             }
         })
@@ -398,13 +375,10 @@ exports.postArtists = (req, res) => {
             if (err) {
                 console.log(err)
             } else {
-                //console.log("~~~case 4")
                 postArtistsFunc(releases, countriesArrayFinal, yearsArrayFinal, artistsArrayFinal, res)
             }
         })
     }
-        
-
 }
 
 exports.postLabels = (req, res) => {

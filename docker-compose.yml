@@ -5,7 +5,10 @@ services:
   web:
     build: .
     ports:
-     - "8080:8080"
+        -name: https://jazz-lib-online-anwku.ondigitalocean.app/
+                protocol: TCP
+                port: 8080
+                targetPort: 8080
     environment:
      - MONGODB_URI=mongodb://mongo:27017/test 
     links:

@@ -52,7 +52,7 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect("mongodb+srv://verve3349:Leeryan14*@jazzlib.hv62v.mongodb.net/jazzlib?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://verve3349:Leeryan14*@jazzlib.hv62v.mongodb.net/jazzlib?retryWrites=true&w=majority", {useUnifiedTopology: true})
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));

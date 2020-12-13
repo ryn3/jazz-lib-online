@@ -60,7 +60,8 @@ require('dotenv').config()
 // });
 
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://verve3349:Leeryan14%2A%0A@jazzlib.hv62v.mongodb.net/jazzlib?retryWrites=true&w=majority";
+const uri = process.env.MONGODB_URI;
+// const uri = "mongodb+srv://verve3349:j3r3QzrfvNa9b6S8@jazzlib.hv62v.mongodb.net/jazzlib?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
   const collection = client.db("test").collection("devices");
